@@ -1,0 +1,8 @@
+target/
+uploads/
+build/
+*.log
+.idea/
+*.iml
+*.class
+.DS_Store

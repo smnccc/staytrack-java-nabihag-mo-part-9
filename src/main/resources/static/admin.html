@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin Console — StayTrack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/css/app.css" />
+</head>
+<body>
+  <header class="admin-top">
+    <div class="admin-top-inner">
+      <a class="brand" href="/admin.html">Stay<span class="accent">Track</span> <span style="font-size:.7rem;color:var(--muted);font-family:var(--font-body);font-weight:600;">ADMIN</span></a>
+      <div class="flex">
+        <span class="muted" id="adminWho" style="font-size:.82rem;"></span>
+        <button class="theme-switch" id="themeSwitch" type="button" title="Toggle light / dark mode" aria-label="Toggle light or dark mode"><span class="knob"></span></button>
+        <button class="btn btn-ghost btn-sm" id="logoutBtn">Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <div class="tabs" id="tabs">
+      <button data-tab="overview" class="active">Overview</button>
+      <button data-tab="tenants">Tenant Accounts</button>
+      <button data-tab="requests">Requests</button>
+      <button data-tab="payments">Payments</button>
+      <button data-tab="rooms">Rooms</button>
+      <button data-tab="audit">Audit Log</button>
+    </div>
+
+    <!-- ================= OVERVIEW ================= -->
+    <section class="tab-panel active" id="panel-overview">
+      <div class="stat-grid" id="statGrid"></div>
+
+      <div class="card mb-16">
+        <div class="between mb-16">
+          <strong>Requests needing attention</strong>
+          <button class="btn btn-ghost btn-sm" data-goto="requests">View all</button>
+        </div>
+        <div class="table-wrap"><table class="data" id="recentRequests"></table></div>
+      </div>
+
+      <div class="card">
+        <div class="between mb-16">
+          <strong>Payments awaiting verification</strong>
+          <button class="btn btn-ghost btn-sm" data-goto="payments">View all</button>
+        </div>
+        <div class="table-wrap"><table class="data" id="recentPayments"></table></div>
+      </div>
+    </section>
+
+    <!-- ================= TENANTS ================= -->
+    <section class="tab-panel" id="panel-tenants">
+      <div class="toolbar">
+        <input class="control" id="tenantSearch" placeholder="Search name or email…" />
+        <select class="control" id="tenantStatusFilter">
+          <option value="">All statuses</option>
+          <option value="active">Active</option>
+          <option value="pending">Pending</option>
+          <option value="suspended">Suspended</option>
+          <option value="rejected">Rejected</option>
+        </select>
+        <button class="btn btn-accent" id="addTenantBtn">+ Add tenant</button>
+        <button class="btn btn-ghost" id="refreshTenants">Refresh</button>
+      </div>
+      <div class="card"><div class="table-wrap"><table class="data" id="tenantsTable"></table></div></div>
+      <input type="file" id="contractFile" accept="application/pdf" style="display:none;" />
+    </section>
+
+    <!-- ================= REQUESTS ================= -->
+    <section class="tab-panel" id="panel-requests">
+      <div class="toolbar">
+        <input class="control" id="requestSearch" placeholder="Search description…" />
+        <select class="control" id="requestStatusFilter">
+          <option value="">All statuses</option>
+          <option value="pending">Pending</option>
+          <option value="in_progress">In progress</option>
+          <option value="resolved">Resolved</option>
+          <option value="rejected">Rejected</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+        <select class="control" id="requestTypeFilter">
+          <option value="">All types</option>
+          <option value="maintenance">Maintenance</option>
+          <option value="neighbor">Neighbor report</option>
+        </select>
+        <button class="btn btn-ghost" id="refreshRequests">Refresh</button>
+      </div>
+      <div class="card"><div class="table-wrap"><table class="data" id="requestsTable"></table></div></div>
+    </section>
+
+    <!-- ================= PAYMENTS ================= -->
+    <section class="tab-panel" id="panel-payments">
+      <div class="toolbar">
+        <input class="control" id="paymentSearch" placeholder="Search tenant…" />
+        <select class="control" id="paymentStatusFilter">
+          <option value="">All statuses</option>
+          <option value="submitted">Awaiting verification</option>
+          <option value="unpaid">Unpaid</option>
+          <option value="overdue">Overdue</option>
+          <option value="verified">Verified</option>
+          <option value="rejected">Rejected</option>
+        </select>
+        <button class="btn btn-accent" id="addBillBtn">+ Add bill</button>
+        <button class="btn btn-ghost" id="generateBillingBtn">Generate monthly bills</button>
+        <button class="btn btn-ghost" id="refreshPayments">Refresh</button>
+      </div>
+      <div class="card"><div class="table-wrap"><table class="data" id="paymentsTable"></table></div></div>
+    </section>
+
+    <!-- ================= ROOMS ================= -->
+    <section class="tab-panel" id="panel-rooms">
+      <div class="toolbar">
+        <input class="control" id="roomNumberInput" placeholder="Room number" />
+        <input class="control" id="roomBuildingInput" placeholder="Building" value="North Hall" />
+        <input class="control" id="roomFloorInput" type="number" placeholder="Floor" style="min-width:90px;" />
+        <input class="control" id="roomCapacityInput" type="number" min="1" placeholder="Capacity" style="min-width:110px;" />
+        <input class="control" id="roomRentInput" type="number" placeholder="Monthly rent" style="min-width:140px;" />
+        <button class="btn btn-accent" id="addRoomBtn">+ Add room</button>
+        <button class="btn btn-ghost" id="refreshRooms">Refresh</button>
+      </div>
+      <div class="card"><div class="table-wrap"><table class="data" id="roomsTable"></table></div></div>
+    </section>
+
+    <!-- ================= AUDIT ================= -->
+    <section class="tab-panel" id="panel-audit">
+      <div class="toolbar">
+        <button class="btn btn-ghost" id="refreshAudit">Refresh</button>
+      </div>
+      <div class="card"><div class="table-wrap"><table class="data" id="auditTable"></table></div></div>
+    </section>
+  </main>
+
+  <!-- ================= MODAL ================= -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" id="modal"></div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

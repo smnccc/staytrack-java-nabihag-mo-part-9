@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Log in — StayTrack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/css/app.css" />
+</head>
+<body>
+  <div class="auth-split">
+
+    <!-- ================= HERO ================= -->
+    <aside class="auth-hero">
+      <div class="auth-hero-inner">
+        <h1>Seamless Living<br>with StayTrack</h1>
+        <p>Track rent, utility bills, maintenance requests, and account settings—all from a single dashboard.</p>
+
+        <div class="hero-cards">
+          <div class="hero-card">
+            <span class="ic">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/>
+              </svg>
+            </span>
+            <span>
+              <b>Payments &amp; Billing</b>
+              <small>Track bills and payment history</small>
+            </span>
+          </div>
+
+          <div class="hero-card">
+            <span class="ic">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </span>
+            <span>
+              <b>Account Management</b>
+              <small>Manage tenant account</small>
+            </span>
+          </div>
+
+          <div class="hero-card">
+            <span class="ic">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.7 6.3a4 4 0 0 0 5 5l-1.4 1.4a4 4 0 0 1-5-5z"/>
+                <path d="M6 18l6-6"/>
+                <path d="M3 21l3-3"/>
+              </svg>
+            </span>
+            <span>
+              <b>Quick Maintenance</b>
+              <small>Report repairs directly</small>
+            </span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ================= PANEL ================= -->
+    <main class="auth-panel">
+      <button class="theme-switch login-theme" id="themeSwitch" type="button"
+              title="Toggle light / dark mode" aria-label="Toggle light or dark mode">
+        <span class="knob"></span>
+      </button>
+
+      <!-- ---------- LOGIN ---------- -->
+      <div class="auth-card" id="loginCard">
+        <div class="auth-head">
+          <a class="brand" href="/">Stay<span class="accent">Track</span></a>
+          <h1 class="auth-title">Welcome back</h1>
+          <p class="auth-sub">Log in to manage your rent, requests and profile.</p>
+        </div>
+
+        <div class="alert" id="alert"></div>
+
+        <form id="loginForm" novalidate>
+          <div class="field">
+            <label for="email">Email address</label>
+            <input class="control" type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <input class="control" type="password" id="password" name="password" placeholder="Your password" autocomplete="current-password" required />
+          </div>
+
+          <div class="between mb-16">
+            <label class="flex" style="font-size:.84rem;cursor:pointer;">
+              <input type="checkbox" id="remember" style="accent-color:var(--accent);" /> Remember me
+            </label>
+            <a href="#" id="forgotLink" style="font-size:.84rem;color:var(--accent);font-weight:600;">Forgot password?</a>
+          </div>
+
+          <button class="btn btn-accent btn-block btn-lg" type="submit" id="loginBtn">Log in</button>
+        </form>
+
+        <div class="auth-foot">
+          Don't have an account? <a href="#" id="goSignup">Create one</a>
+        </div>
+      </div>
+
+      <!-- ---------- SIGN UP (inline, walang page load) ---------- -->
+      <div class="auth-card" id="signupCard" style="display:none;">
+        <div class="auth-head">
+          <a class="brand" href="/">Stay<span class="accent">Track</span></a>
+          <h1 class="auth-title" id="signupTitle">Create your account</h1>
+          <p class="auth-sub" id="signupSub">Sign up as a resident. We'll email you a code to verify it's really you.</p>
+        </div>
+
+        <div class="alert" id="signupAlert"></div>
+
+        <form id="signupForm" novalidate>
+          <div class="row-2">
+            <div class="field">
+              <label for="suFirst">First name</label>
+              <input class="control" type="text" id="suFirst" placeholder="Alex" required />
+            </div>
+            <div class="field">
+              <label for="suLast">Last name</label>
+              <input class="control" type="text" id="suLast" placeholder="Rivera" required />
+            </div>
+          </div>
+
+          <div class="row-2">
+            <div class="field">
+              <label for="suEmail">Email</label>
+              <input class="control" type="email" id="suEmail" placeholder="you@email.com" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="suPhone">Phone</label>
+              <input class="control" type="tel" id="suPhone" placeholder="+63 912 345 6789" required />
+            </div>
+          </div>
+
+          <div class="row-2">
+            <div class="field">
+              <label for="suPass">Password</label>
+              <input class="control" type="password" id="suPass" placeholder="9+ chars, 1 uppercase" autocomplete="new-password" required />
+            </div>
+            <div class="field">
+              <label for="suPass2">Confirm</label>
+              <input class="control" type="password" id="suPass2" placeholder="Repeat password" autocomplete="new-password" required />
+            </div>
+          </div>
+
+          <button class="btn btn-accent btn-block btn-lg" type="submit" id="signupBtn">Create account</button>
+        </form>
+
+        <form id="otpForm" novalidate style="display:none;">
+          <p class="auth-sub" style="margin-bottom:18px;">
+            Enter the 6-digit code we sent to <strong id="otpEmailLabel"></strong>.
+          </p>
+
+          <div class="field">
+            <label>Verification code</label>
+            <div class="otp-inputs" id="otpInputs">
+              <input maxlength="1" inputmode="numeric" />
+              <input maxlength="1" inputmode="numeric" />
+              <input maxlength="1" inputmode="numeric" />
+              <input maxlength="1" inputmode="numeric" />
+              <input maxlength="1" inputmode="numeric" />
+              <input maxlength="1" inputmode="numeric" />
+            </div>
+          </div>
+
+          <button class="btn btn-accent btn-block btn-lg" type="submit" id="otpBtn">Verify email</button>
+
+          <div class="auth-foot">
+            Didn't get it? <a href="#" id="resendLink">Resend code</a><span id="cooldown"></span>
+          </div>
+        </form>
+
+        <div class="auth-foot" id="signupFoot">
+          Already have an account? <a href="#" id="backToLogin">Log in</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script>
+    // Kung naka-login na, deretso na sa dashboard.
+    if (Store.token && Store.user) {
+      location.href = Store.user.role === 'admin' ? '/admin.html' : '/index.html';
+    }
+
+    /* ================= THEME ================= */
+    qs('#themeSwitch').addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('staytrack_theme', next);
+    });
+
+    /* ================= VIEW SWITCH ================= */
+    const loginCard = qs('#loginCard');
+    const signupCard = qs('#signupCard');
+
+    function showView(view) {
+      const isSignup = view === 'signup';
+      loginCard.style.display = isSignup ? 'none' : 'block';
+      signupCard.style.display = isSignup ? 'block' : 'none';
+      window.scrollTo(0, 0);
+    }
+
+    qs('#goSignup').addEventListener('click', (e) => { e.preventDefault(); showView('signup'); });
+    qs('#backToLogin').addEventListener('click', (e) => { e.preventDefault(); showView('login'); });
+
+    /* ================= LOGIN ================= */
+    const form = qs('#loginForm');
+    const btn = qs('#loginBtn');
+    const alertBox = qs('#alert');
+
+    const remembered = localStorage.getItem('staytrack_last_email');
+    if (remembered) {
+      qs('#email').value = remembered;
+      qs('#remember').checked = true;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert(alertBox);
+
+      const email = qs('#email').value.trim();
+      const password = qs('#password').value;
+
+      if (!email || !password) {
+        return showAlert(alertBox, 'Please enter your email and password.');
+      }
+
+      setLoading(btn, true, 'Signing in…');
+      try {
+        const remember = qs('#remember').checked;
+        const data = await api.post('/auth/login', { email, password }, { auth: false });
+        Store.save(data, remember);
+        if (remember) {
+          localStorage.setItem('staytrack_last_email', email);
+        } else {
+          localStorage.removeItem('staytrack_last_email');
+        }
+        location.href = data.user.role === 'admin' ? '/admin.html' : '/index.html';
+      } catch (err) {
+        if (err.details && err.details.code === 'EMAIL_NOT_VERIFIED') {
+          // Di pa verified — ituloy sa OTP step sa loob ng page na ito.
+          pendingEmail = err.details.email || email;
+          showView('signup');
+          showOtpStep();
+          return;
+        }
+        showAlert(alertBox, err.message || 'Login failed.');
+        setLoading(btn, false);
+      }
+    });
+
+    /* --- Forgot password --- */
+    qs('#forgotLink').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const email = qs('#email').value.trim();
+      if (!email) {
+        return showAlert(alertBox, 'Enter your email above first, then click "Forgot password".', 'info');
+      }
+      try {
+        setLoading(btn, true, 'Sending code…');
+        const data = await api.post('/auth/forgot-password', { email }, { auth: false });
+        setLoading(btn, false);
+        sessionStorage.setItem('staytrack_reset_email', email);
+        sessionStorage.setItem('staytrack_reset_otp', data.devOtp || '');
+        showAlert(alertBox, 'If that email is registered, a reset code was sent. Redirecting…', 'success');
+        setTimeout(() => (location.href = '/reset-password.html'), 1200);
+      } catch (err) {
+        setLoading(btn, false);
+        showAlert(alertBox, err.message || 'Could not send the reset code.');
+      }
+    });
+
+    /* ================= SIGN UP ================= */
+    const signupForm = qs('#signupForm');
+    const otpForm = qs('#otpForm');
+    const signupBtn = qs('#signupBtn');
+    const otpBtn = qs('#otpBtn');
+    const signupAlert = qs('#signupAlert');
+    const otpInputs = qsa('#otpInputs input');
+
+    let pendingEmail = sessionStorage.getItem('staytrack_pending_email') || '';
+    let cooldownTimer = null;
+
+    function showOtpStep() {
+      signupForm.style.display = 'none';
+      otpForm.style.display = 'block';
+      qs('#signupFoot').style.display = 'none';
+      qs('#signupTitle').textContent = 'Verify your email';
+      qs('#signupSub').textContent = 'One quick step to secure your account.';
+      qs('#otpEmailLabel').textContent = pendingEmail;
+      otpInputs[0].focus();
+      startCooldown(60);
+    }
+
+    function showDetailsStep() {
+      signupForm.style.display = 'block';
+      otpForm.style.display = 'none';
+      qs('#signupFoot').style.display = 'block';
+      qs('#signupTitle').textContent = 'Create your account';
+      qs('#signupSub').textContent = "Sign up as a resident. We'll email you a code to verify it's really you.";
+    }
+
+    /* --- Galaw ng OTP boxes --- */
+    otpInputs.forEach((input, i) => {
+      input.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/\D/g, '').slice(0, 1);
+        if (e.target.value && i < otpInputs.length - 1) otpInputs[i + 1].focus();
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !e.target.value && i > 0) otpInputs[i - 1].focus();
+        if (e.key === 'ArrowLeft' && i > 0) otpInputs[i - 1].focus();
+        if (e.key === 'ArrowRight' && i < otpInputs.length - 1) otpInputs[i + 1].focus();
+      });
+      input.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const digits = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6).split('');
+        digits.forEach((d, idx) => (otpInputs[idx].value = d));
+        otpInputs[Math.min(digits.length, 5)].focus();
+      });
+    });
+
+    function readOtp() {
+      return otpInputs.map((i) => i.value).join('');
+    }
+
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert(signupAlert);
+
+      const firstName = qs('#suFirst').value.trim();
+      const lastName = qs('#suLast').value.trim();
+      const email = qs('#suEmail').value.trim();
+      const phone = qs('#suPhone').value.trim();
+      const password = qs('#suPass').value;
+      const confirmPassword = qs('#suPass2').value;
+
+      if (!firstName || !lastName || !email || !phone || !password) {
+        return showAlert(signupAlert, 'Please fill in all fields, including your phone number.');
+      }
+      if (password.length <= 8) {
+        return showAlert(signupAlert, 'Password must be more than 8 characters.');
+      }
+      if (!/[A-Z]/.test(password)) {
+        return showAlert(signupAlert, 'Password must contain at least one uppercase letter (A-Z).');
+      }
+      if (password !== confirmPassword) {
+        return showAlert(signupAlert, 'Passwords do not match.');
+      }
+
+      setLoading(signupBtn, true, 'Creating account…');
+      try {
+        const data = await api.post('/auth/signup', { firstName, lastName, email, phone, password }, { auth: false });
+        pendingEmail = data.email || email;
+        sessionStorage.setItem('staytrack_pending_email', pendingEmail);
+        if (data.devOtp) sessionStorage.setItem('staytrack_pending_otp', data.devOtp);
+        setLoading(signupBtn, false);
+
+        if (data.devOtp) {
+          // Dev mode, auto-fill yung code para madali mag-test.
+          data.devOtp.split('').forEach((d, i) => (otpInputs[i].value = d));
+          showAlert(signupAlert, `Development mode — your code is ${data.devOtp}.`, 'info');
+        } else {
+          showAlert(signupAlert, 'Account created! Check your inbox for the 6-digit code.', 'success');
+        }
+        showOtpStep();
+      } catch (err) {
+        setLoading(signupBtn, false);
+        const detail = err.details ? Object.values(err.details)[0] : null;
+        showAlert(signupAlert, detail || err.message || 'Signup failed.');
+      }
+    });
+
+    otpForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert(signupAlert);
+      const code = readOtp();
+      if (code.length !== 6) return showAlert(signupAlert, 'Please enter all 6 digits.');
+
+      setLoading(otpBtn, true, 'Verifying…');
+      try {
+        const data = await api.post('/auth/verify-otp', { email: pendingEmail, code }, { auth: false });
+        Store.save(data);
+        sessionStorage.removeItem('staytrack_pending_email');
+        sessionStorage.removeItem('staytrack_pending_otp');
+        showAlert(signupAlert, 'Email verified! Taking you to your dashboard…', 'success');
+        setTimeout(() => (location.href = '/index.html'), 900);
+      } catch (err) {
+        setLoading(otpBtn, false);
+        showAlert(signupAlert, err.message || 'Verification failed.');
+      }
+    });
+
+    /* --- Resend na may cooldown --- */
+    function startCooldown(seconds) {
+      clearInterval(cooldownTimer);
+      let left = seconds;
+      const el = qs('#cooldown');
+      const render = () => {
+        el.textContent = left > 0 ? ` (${left}s)` : '';
+        if (left <= 0) clearInterval(cooldownTimer);
+        left -= 1;
+      };
+      render();
+      cooldownTimer = setInterval(render, 1000);
+    }
+
+    qs('#resendLink').addEventListener('click', async (e) => {
+      e.preventDefault();
+      hideAlert(signupAlert);
+      try {
+        const data = await api.post('/auth/resend-otp', { email: pendingEmail, purpose: 'signup' }, { auth: false });
+        if (data.devOtp) {
+          data.devOtp.split('').forEach((d, i) => (otpInputs[i].value = d));
+          showAlert(signupAlert, `Development mode — new code is ${data.devOtp}.`, 'info');
+        } else {
+          showAlert(signupAlert, 'A new code has been sent to your email.', 'success');
+        }
+        startCooldown(60);
+      } catch (err) {
+        showAlert(signupAlert, err.message || 'Could not resend the code.');
+      }
+    });
+
+    // Kung galing sa isang verification link, deretso sa OTP step.
+    const params = new URLSearchParams(location.search);
+    if (params.get('step') === 'verify') {
+      pendingEmail = params.get('email') || pendingEmail;
+      showView('signup');
+      showOtpStep();
+    }
+  </script>
+</body>
+</html>
